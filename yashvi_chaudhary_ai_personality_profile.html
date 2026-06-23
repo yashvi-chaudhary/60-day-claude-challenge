@@ -1,0 +1,688 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .poster {
+    background: #050a18;
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .bg-orbs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+  }
+
+  .orb1 { width: 300px; height: 300px; background: rgba(99,102,241,0.12); top: -80px; right: -60px; }
+  .orb2 { width: 250px; height: 250px; background: rgba(59,130,246,0.1); bottom: 100px; left: -80px; }
+  .orb3 { width: 180px; height: 180px; background: rgba(168,85,247,0.08); top: 40%; right: 20%; }
+
+  .header {
+    position: relative;
+    text-align: center;
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid rgba(59,130,246,0.2);
+  }
+
+  .header-tag {
+    display: inline-block;
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #60a5fa;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-bottom: 8px;
+  }
+
+  .poster-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(99,102,241,0.5);
+    margin-bottom: 2px;
+  }
+
+  .poster-subtitle {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #7c3aed;
+    font-family: 'Orbitron', monospace;
+    margin-bottom: 6px;
+  }
+
+  .hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  .photo-col {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .photo-frame {
+    position: relative;
+    width: 160px;
+    height: 190px;
+    margin-bottom: 12px;
+  }
+
+  .photo-border {
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3b82f6, #7c3aed, #06b6d4);
+    z-index: 0;
+    animation: borderPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes borderPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .photo-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(160deg, #0f1729 0%, #1e2d4a 50%, #0f1729 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .neural-bg {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+  }
+
+  .avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    border: 2px solid rgba(96,165,250,0.5);
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .avatar-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    color: #93c5fd;
+    letter-spacing: 1px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .photo-tag {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(99,102,241,0.9);
+    color: white;
+    font-size: 8px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .name-block {
+    text-align: center;
+  }
+
+  .person-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+
+  .person-role {
+    font-size: 8px;
+    color: #7c3aed;
+    letter-spacing: 2px;
+    font-family: 'Orbitron', monospace;
+    margin-bottom: 8px;
+  }
+
+  .fun-title {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.4);
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .fun-title-label {
+    font-size: 8px;
+    color: #a78bfa;
+    letter-spacing: 2px;
+    font-family: 'Orbitron', monospace;
+    margin-bottom: 2px;
+  }
+
+  .fun-title-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #c4b5fd;
+  }
+
+  .fun-title-sub {
+    font-size: 8px;
+    color: #6d28d9;
+    margin-top: 2px;
+  }
+
+  .right-col {
+    padding: 16px 16px 16px 8px;
+  }
+
+  .glass-card {
+    background: rgba(15,23,42,0.7);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.4), transparent);
+  }
+
+  .card-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 7px;
+    letter-spacing: 2px;
+    color: #3b82f6;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .card-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(59,130,246,0.3);
+  }
+
+  .dot-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .dot-list li {
+    font-size: 9px;
+    color: #94a3b8;
+    padding-left: 10px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .dot-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-size: 8px;
+  }
+
+  .two-col-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px 16px;
+  }
+
+  .s-card {
+    background: rgba(15,23,42,0.7);
+    border: 1px solid rgba(59,130,246,0.15);
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .s-card-green { border-color: rgba(34,197,94,0.2); }
+  .s-card-green .card-label { color: #4ade80; }
+  .s-card-green .dot-list li::before { color: #4ade80; }
+
+  .s-card-red { border-color: rgba(239,68,68,0.2); }
+  .s-card-red .card-label { color: #f87171; }
+  .s-card-red .dot-list li::before { color: #f87171; }
+
+  .s-card-purple { border-color: rgba(168,85,247,0.2); }
+  .s-card-purple .card-label { color: #c084fc; }
+  .s-card-purple .dot-list li::before { color: #c084fc; }
+
+  .s-card-amber { border-color: rgba(251,191,36,0.2); }
+  .s-card-amber .card-label { color: #fbbf24; }
+  .s-card-amber .dot-list li::before { color: #fbbf24; }
+
+  .s-card-cyan { border-color: rgba(34,211,238,0.2); }
+  .s-card-cyan .card-label { color: #22d3ee; }
+  .s-card-cyan .dot-list li::before { color: #22d3ee; }
+
+  .full-row {
+    padding: 0 16px 10px;
+  }
+
+  .quote-block {
+    background: rgba(99,102,241,0.08);
+    border-left: 3px solid #7c3aed;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-size: 28px;
+    color: rgba(124,58,237,0.3);
+    line-height: 1;
+    font-family: serif;
+    position: absolute;
+    top: 2px;
+    left: 8px;
+  }
+
+  .quote-text {
+    font-size: 9px;
+    color: #94a3b8;
+    line-height: 1.7;
+    padding-left: 12px;
+    font-style: italic;
+  }
+
+  .timeline-section {
+    padding: 10px 16px;
+    border-top: 1px solid rgba(59,130,246,0.15);
+    border-bottom: 1px solid rgba(59,130,246,0.15);
+  }
+
+  .timeline-steps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+
+  .t-step {
+    background: rgba(30,42,74,0.8);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 20px;
+    padding: 3px 8px;
+    font-size: 8px;
+    color: #93c5fd;
+    white-space: nowrap;
+  }
+
+  .t-arrow {
+    color: #3b82f6;
+    font-size: 10px;
+  }
+
+  .focus-section {
+    padding: 10px 16px 6px;
+  }
+
+  .focus-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .focus-tag {
+    background: rgba(30,42,74,0.9);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 16px;
+    padding: 3px 10px;
+    font-size: 9px;
+    color: #a78bfa;
+  }
+
+  .career-paths {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+
+  .career-tag {
+    background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.25);
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 8px;
+    color: #67e8f9;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px 10px;
+  }
+
+  .neural-svg {
+    position: absolute;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .footer-bar {
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(59,130,246,0.15);
+    margin-top: 4px;
+  }
+
+  .footer-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 7px;
+    color: rgba(99,102,241,0.5);
+    letter-spacing: 2px;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s ease-in-out infinite;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent);
+    margin: 0 16px;
+  }
+
+  .s-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.3;
+  }
+</style>
+
+<div class="poster">
+  <div class="bg-grid"></div>
+  <div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <div class="header">
+    <div class="header-tag">◈ AI PERSONALITY PROFILE ◈</div>
+    <div class="poster-title">YASHVI CHAUDHARY</div>
+    <div class="poster-subtitle">FUTURE AI ENGINEER • PROBLEM SOLVER • BUILDER</div>
+  </div>
+
+  <div class="hero-section">
+    <div class="photo-col">
+      <div class="photo-frame">
+        <div class="photo-border"></div>
+        <div class="photo-inner">
+          <svg class="neural-svg" viewBox="0 0 160 190" width="160" height="190">
+            <circle cx="40" cy="40" r="3" fill="#3b82f6" opacity="0.6"/>
+            <circle cx="120" cy="60" r="3" fill="#7c3aed" opacity="0.6"/>
+            <circle cx="80" cy="95" r="3" fill="#06b6d4" opacity="0.6"/>
+            <circle cx="30" cy="140" r="3" fill="#3b82f6" opacity="0.6"/>
+            <circle cx="130" cy="130" r="3" fill="#7c3aed" opacity="0.6"/>
+            <circle cx="70" cy="165" r="3" fill="#06b6d4" opacity="0.6"/>
+            <line x1="40" y1="40" x2="80" y2="95" stroke="#3b82f6" stroke-width="0.5" opacity="0.4"/>
+            <line x1="120" y1="60" x2="80" y2="95" stroke="#7c3aed" stroke-width="0.5" opacity="0.4"/>
+            <line x1="80" y1="95" x2="30" y2="140" stroke="#3b82f6" stroke-width="0.5" opacity="0.4"/>
+            <line x1="80" y1="95" x2="130" y2="130" stroke="#7c3aed" stroke-width="0.5" opacity="0.4"/>
+            <line x1="30" y1="140" x2="70" y2="165" stroke="#06b6d4" stroke-width="0.5" opacity="0.4"/>
+            <line x1="130" y1="130" x2="70" y2="165" stroke="#06b6d4" stroke-width="0.5" opacity="0.4"/>
+          </svg>
+          <div class="avatar-circle">YC</div>
+          <div class="avatar-name">YASHVI CHAUDHARY</div>
+          <div class="photo-tag">AI EXPLORER</div>
+        </div>
+      </div>
+
+      <div class="name-block" style="width:100%">
+        <div class="person-name">Yashvi Chaudhary</div>
+        <div class="person-role">B.TECH • AI ENTHUSIAST</div>
+
+        <div class="fun-title">
+          <div class="fun-title-label">◈ IDENTITY TAG</div>
+          <div class="fun-title-text">THE AI EXPLORER</div>
+          <div class="fun-title-sub">Turning Curiosity Into Capability</div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-label">AI USER TYPE</div>
+          <div style="text-align:center; font-family:'Orbitron',monospace; font-size:11px; color:#60a5fa; font-weight:600; margin-bottom:4px;">Strategic Learner</div>
+          <ul class="dot-list">
+            <li>Learn &amp; build skills</li>
+            <li>Research &amp; planning</li>
+            <li>Solve technical problems</li>
+            <li>Career growth strategy</li>
+          </ul>
+        </div>
+
+        <div class="glass-card" style="border-color:rgba(168,85,247,0.2)">
+          <div class="card-label" style="color:#c084fc">LEARNING STYLE</div>
+          <ul class="dot-list" style="--c:#c084fc">
+            <li style="color:#94a3b8">Learns concepts deeply</li>
+            <li style="color:#94a3b8">Prefers structured paths</li>
+            <li style="color:#94a3b8">Research before deciding</li>
+            <li style="color:#94a3b8">Values clarity &amp; understanding</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="glass-card">
+        <div class="card-label">AI WORKING STYLE</div>
+        <ul class="dot-list">
+          <li>Uses AI as tutor, mentor &amp; research assistant</li>
+          <li>Learns through questioning and exploration</li>
+          <li>Breaks complex topics into understandable pieces</li>
+          <li>Uses AI for academic and career challenges</li>
+          <li>Focused on understanding over memorization</li>
+        </ul>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+        <div class="glass-card s-card-green" style="margin-bottom:0">
+          <div class="card-label" style="color:#4ade80">STRENGTHS</div>
+          <ul class="dot-list">
+            <li style="color:#94a3b8">Curious learner</li>
+            <li style="color:#94a3b8">Problem-solving mindset</li>
+            <li style="color:#94a3b8">Consistent &amp; disciplined</li>
+            <li style="color:#94a3b8">Growth-oriented</li>
+            <li style="color:#94a3b8">Analytical thinker</li>
+            <li style="color:#94a3b8">Quick learner</li>
+          </ul>
+        </div>
+        <div class="glass-card s-card-red" style="margin-bottom:0">
+          <div class="card-label" style="color:#f87171">WEAKNESSES</div>
+          <ul class="dot-list">
+            <li style="color:#94a3b8">Overthinks decisions</li>
+            <li style="color:#94a3b8">Needs real-world projects</li>
+            <li style="color:#94a3b8">Perfectionist tendencies</li>
+            <li style="color:#94a3b8">Delays execution</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="glass-card" style="border-color:rgba(34,211,238,0.2); margin-bottom:0">
+        <div class="card-label" style="color:#22d3ee">WHAT MAKES HER DIFFERENT</div>
+        <ul class="dot-list">
+          <li>Genuine curiosity &amp; long-term mindset</li>
+          <li>Combines technical learning with communication</li>
+          <li>Uses AI as a capability multiplier</li>
+          <li>Consistent learner focused on skill-building</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="two-col-cards">
+    <div class="s-card s-card-cyan">
+      <div class="card-label" style="color:#22d3ee">FUTURE CAREER PATHS</div>
+      <div class="career-paths">
+        <span class="career-tag">AI Engineer</span>
+        <span class="career-tag">ML Engineer</span>
+        <span class="career-tag">Software Engineer</span>
+        <span class="career-tag">Research Engineer</span>
+        <span class="career-tag">Data Scientist</span>
+        <span class="career-tag">AI Product Builder</span>
+        <span class="career-tag">Tech Consultant</span>
+      </div>
+    </div>
+    <div class="s-card s-card-amber">
+      <div class="card-label" style="color:#fbbf24">AREAS TO IMPROVE</div>
+      <ul class="dot-list">
+        <li style="color:#94a3b8">Build more projects</li>
+        <li style="color:#94a3b8">Strengthen DSA skills</li>
+        <li style="color:#94a3b8">Gain internship experience</li>
+        <li style="color:#94a3b8">Improve public speaking</li>
+        <li style="color:#94a3b8">Develop leadership skills</li>
+        <li style="color:#94a3b8">Create portfolio projects</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="full-row">
+    <div class="quote-block">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">
+        A determined builder with a curious mind and ambitious vision. Yashvi uses technology as a tool for growth, learning and impact. She studies deeply, learns consistently, and is building the foundation for a future in Artificial Intelligence. Every question she asks today becomes a skill she can use tomorrow.
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <div class="timeline-section">
+    <div class="card-label" style="padding:0; margin-bottom:6px; font-size:7px; color:#3b82f6; font-family:'Orbitron',monospace; letter-spacing:2px;">◈ MY JOURNEY SO FAR</div>
+    <div class="timeline-steps">
+      <span class="t-step">B.Tech Student</span>
+      <span class="t-arrow">→</span>
+      <span class="t-step">Curious Learner</span>
+      <span class="t-arrow">→</span>
+      <span class="t-step">AI Enthusiast</span>
+      <span class="t-arrow">→</span>
+      <span class="t-step">Problem Solver</span>
+      <span class="t-arrow">→</span>
+      <span class="t-step" style="border-color:rgba(99,102,241,0.5); color:#c084fc;">Future AI Engineer</span>
+    </div>
+  </div>
+
+  <div class="focus-section">
+    <div class="card-label" style="padding:0; margin-bottom:0; font-size:7px; color:#3b82f6; font-family:'Orbitron',monospace; letter-spacing:2px;">◈ CURRENT FOCUS</div>
+    <div class="focus-tags">
+      <span class="focus-tag">Python</span>
+      <span class="focus-tag">Data Structures</span>
+      <span class="focus-tag">Machine Learning</span>
+      <span class="focus-tag">AI Tools</span>
+      <span class="focus-tag">Communication Skills</span>
+      <span class="focus-tag">Internship Prep</span>
+      <span class="focus-tag">Google Internship Goals</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <div class="footer-text"><span class="status-dot"></span>PROFILE ACTIVE • 2026</div>
+    <div style="display:flex; gap:8px;">
+      <svg viewBox="0 0 60 20" width="60" height="20">
+        <circle cx="5" cy="10" r="3" fill="#3b82f6" opacity="0.7"/>
+        <circle cx="20" cy="5" r="2" fill="#7c3aed" opacity="0.7"/>
+        <circle cx="35" cy="14" r="3" fill="#06b6d4" opacity="0.7"/>
+        <circle cx="50" cy="7" r="2" fill="#3b82f6" opacity="0.7"/>
+        <line x1="5" y1="10" x2="20" y2="5" stroke="#3b82f6" stroke-width="0.5" opacity="0.5"/>
+        <line x1="20" y1="5" x2="35" y2="14" stroke="#7c3aed" stroke-width="0.5" opacity="0.5"/>
+        <line x1="35" y1="14" x2="50" y2="7" stroke="#06b6d4" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="footer-text">AI EXPLORER • BUILDER • LEARNER</div>
+  </div>
+</div>
