@@ -55,6 +55,6 @@ To turn curiosity into capability and build a strong foundation in AI, technolog
 
 ### Connect With Me
 
-LinkedIn: (Add your LinkedIn profile link)
+LinkedIn: www.linkedin.com/in/yashvi-chaudhary-1b72222a2
 
 GitHub: https://github.com/yashvi-chaudhary
